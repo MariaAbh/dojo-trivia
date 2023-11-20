@@ -73,7 +73,6 @@ import sys
 seed(int(sys.argv[1]))
 
 if __name__ == '__main__':
-	# not_a_winner = False
 	is_a_winner = False
 	game = Game()
 	game.add('Chet')
@@ -84,9 +83,7 @@ if __name__ == '__main__':
 		game.roll(randrange(5) + 1)
 		if randrange(9) == 7:
 			game.wrong_answer()
-			# not_a_winner = True
 			is_a_winner = False
 		else:
-			# not_a_winner = game.was_correctly_answered()
 			is_a_winner = game.was_correctly_answered()
 		if is_a_winner: break
