@@ -21,7 +21,8 @@ class Game:
 		self.player = None
 		self.current_player = -1
 		self.is_getting_out_of_penalty_box = False
-		
+		self._is_finished = False
+
 		self.category_questions = {k:[f'{k} Question {i}' for i in range(50)] for k in categories}
 
 	def add(self, player_name):
@@ -53,8 +54,12 @@ class Game:
 			print("Answer was correct!!!!")
 			self.player.purse += 1
 			print(f"{self.player} now has {self.player.purse} Gold Coins.")
-			
-		return self.player.purse == 6
+			if self.player.purse == 6:
+				self._is_finished = True
+
+	def is_finished(self):
+		# return any(player.purse == 6 for player in self.players)
+		return self._is_finished
 
 	def wrong_answer(self):
 		print('Question was incorrectly answered')
@@ -73,15 +78,14 @@ import sys
 seed(int(sys.argv[1]))
 
 if __name__ == '__main__':
-	is_a_winner = False
 	game = Game()
 	game.add('Chet')
 	game.add('Pat')
 	game.add('Sue')
 
-	while not is_a_winner:
+	while not game.is_finished():
 		game.roll(randrange(5) + 1)
 		if randrange(9) == 7:
 			game.wrong_answer()
 		else:
-			is_a_winner = game.was_correctly_answered()
+			game.was_correctly_answered()
