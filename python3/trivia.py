@@ -4,13 +4,13 @@ class Player:
 	def __init__(self, name):
 		self.name = name
 		self.place = 0
+		self.purse = 0
 	def __str__(self):
 		return self.name
 
 class Game:
 	def __init__(self):
 		self.players = []
-		self.purses = [0] * 6
 		self.in_penalty_box = [0] * 6
 
 		self.player = None
@@ -72,9 +72,9 @@ class Game:
 		else:
 			print("Answer was correct!!!!")
 
-			self.purses[self.current_player] += 1
+			self.player.purse += 1
 			
-			print(f"{self.player} now has {self.purses[self.current_player]} Gold Coins.")
+			print(f"{self.player} now has {self.player.purse} Gold Coins.")
 			winner = self._did_player_win()
 			
 		return winner
@@ -85,11 +85,11 @@ class Game:
 		self.in_penalty_box[self.current_player] = True
 
 	def _did_player_win(self):
-		return not (self.purses[self.current_player] == 6)
+		return not (self.player.purse == 6)
 
 	def next_player(self):
 		self.current_player += 1
-		if self.current_player == len(self.players): 
+		if self.current_player == len(self.players):
 			self.current_player = 0
 		self.player = self.players[self.current_player]
 		return self.current_player
