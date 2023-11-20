@@ -6,11 +6,13 @@ class Player:
 		self.place = 0
 		self.purse = 0
 		self.in_penalty_box = False
+		self.category = None
 	def __str__(self):
 		return self.name
 	def roll(self,roll):
 		self.place += roll
 		self.place %= 12
+		self.category = categories[self.place % len(categories)]
 		return self.place
 
 class Game:
@@ -43,15 +45,8 @@ class Game:
 
 		self.player.roll(roll)
 		print(f"{self.player}'s new location is {self.player.place}")
-		print(f'The category is {self._current_category}')
-		self._ask_question()
-
-	def _ask_question(self):
-		print(self.category_questions[self._current_category].pop(0))
-
-	@property
-	def _current_category(self):
-		return categories[self.player.place%len(categories)]
+		print(f'The category is {self.player.category}')
+		print(self.category_questions[self.player.category].pop(0))
 
 	def was_correctly_answered(self):
 		if self.player.in_penalty_box and not self.is_getting_out_of_penalty_box:
