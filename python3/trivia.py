@@ -79,11 +79,9 @@ if __name__ == '__main__':
 	game.add('Pat')
 	game.add('Sue')
 
-	while True:
+	while not is_a_winner:
 		game.roll(randrange(5) + 1)
 		if randrange(9) == 7:
 			game.wrong_answer()
-			is_a_winner = False
 		else:
 			is_a_winner = game.was_correctly_answered()
-		if is_a_winner: break
