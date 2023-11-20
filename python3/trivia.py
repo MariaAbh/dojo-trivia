@@ -21,11 +21,8 @@ class Game:
 	def add(self, player_name):
 		self.players.append(player_name)
 		self.in_penalty_box[self.how_many_players] = False
-
 		print(player_name + " was added")
 		print("They are player number %s" % len(self.players))
-
-		return True
 
 	@property
 	def how_many_players(self):
