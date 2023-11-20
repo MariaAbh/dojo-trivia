@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+categories = ["Pop","Science","Sports","Rock"]
+class Player:
+	def __init__(self, name):
+		self.name = name
 
 class Game:
 	def __init__(self):
@@ -7,13 +11,10 @@ class Game:
 		self.purses = [0] * 6
 		self.in_penalty_box = [0] * 6
 
-		self.pop_questions = [f'Pop Question {i}' for i in range(50)]
-		self.science_questions = [f'Science Question {i}' for i in range(50)]
-		self.sports_questions = [f'Sports Question {i}' for i in range(50)]
-		self.rock_questions = [f'Rock Question {i}' for i in range(50)]
-
 		self.current_player = 0
 		self.is_getting_out_of_penalty_box = False
+		
+		self.category_questions = {k:[f'{k} Question {i}' for i in range(50)] for k in categories}
 
 	def is_playable(self):
 		return self.how_many_players >= 2
@@ -48,24 +49,16 @@ class Game:
 				print(f'{self.players[self.current_player]} is getting out of the penalty box')
 
 		self.places[self.current_player] = self.player_place(roll)
-		print(self.players[self.current_player] + \
-					'\'s new location is ' + \
-					str(self.places[self.current_player]))
+		print(self.players[self.current_player] + '\'s new location is ' + str(self.places[self.current_player]))
 		print(f'The category is {self._current_category}')
 		self._ask_question()
 
 	def _ask_question(self):
-		if self._current_category == 'Pop': print(self.pop_questions.pop(0))
-		if self._current_category == 'Science': print(self.science_questions.pop(0))
-		if self._current_category == 'Sports': print(self.sports_questions.pop(0))
-		if self._current_category == 'Rock': print(self.rock_questions.pop(0))
+		print(self.category_questions[self._current_category].pop(0))
 
 	@property
 	def _current_category(self):
-		if self.places[self.current_player] % 4 == 0: return 'Pop'
-		if self.places[self.current_player] % 4 == 1: return 'Science'
-		if self.places[self.current_player] % 4 == 2: return 'Sports'
-		if self.places[self.current_player] % 4 == 3: return 'Rock'
+		return categories[self.places[self.current_player]%len(categories)]
 
 	def was_correctly_answered(self):
 		if self.in_penalty_box[self.current_player] and not self.is_getting_out_of_penalty_box:
@@ -75,10 +68,7 @@ class Game:
 
 			self.purses[self.current_player] += 1
 			
-			print(self.players[self.current_player] + \
-				' now has ' + \
-				str(self.purses[self.current_player]) + \
-				' Gold Coins.')
+			print(self.players[self.current_player] + ' now has ' + str(self.purses[self.current_player]) + ' Gold Coins.')
 			winner = self._did_player_win()
 			
 		self.current_player = self.next_player()
