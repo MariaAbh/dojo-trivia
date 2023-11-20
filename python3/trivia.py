@@ -49,25 +49,17 @@ class Game:
 		print(self.category_questions[self.player.category].pop(0))
 
 	def was_correctly_answered(self):
-		if self.player.in_penalty_box and not self.is_getting_out_of_penalty_box:
-			winner = True
-		else:
+		if not self.player.in_penalty_box or self.is_getting_out_of_penalty_box:
 			print("Answer was correct!!!!")
-
 			self.player.purse += 1
-			
 			print(f"{self.player} now has {self.player.purse} Gold Coins.")
-			winner = self._did_player_win()
 			
-		return winner
+		return self.player.purse == 6
 
 	def wrong_answer(self):
 		print('Question was incorrectly answered')
 		print(f"{self.player} was sent to the penalty box")
 		self.player.in_penalty_box = True
-
-	def _did_player_win(self):
-		return not (self.player.purse == 6)
 
 	def next_player(self):
 		self.current_player += 1
@@ -81,7 +73,8 @@ import sys
 seed(int(sys.argv[1]))
 
 if __name__ == '__main__':
-	not_a_winner = False
+	# not_a_winner = False
+	is_a_winner = False
 	game = Game()
 	game.add('Chet')
 	game.add('Pat')
@@ -91,7 +84,9 @@ if __name__ == '__main__':
 		game.roll(randrange(5) + 1)
 		if randrange(9) == 7:
 			game.wrong_answer()
-			not_a_winner = True
+			# not_a_winner = True
+			is_a_winner = False
 		else:
-			not_a_winner = game.was_correctly_answered()
-		if not not_a_winner: break
+			# not_a_winner = game.was_correctly_answered()
+			is_a_winner = game.was_correctly_answered()
+		if is_a_winner: break
