@@ -3,11 +3,13 @@ categories = ["Pop","Science","Sports","Rock"]
 class Player:
 	def __init__(self, name):
 		self.name = name
+		self.place = 0
+	def __str__(self):
+		return self.name
 
 class Game:
 	def __init__(self):
 		self.players = []
-		self.places = [0] * 6
 		self.purses = [0] * 6
 		self.in_penalty_box = [0] * 6
 
@@ -20,7 +22,9 @@ class Game:
 		return self.how_many_players >= 2
 
 	def add(self, player_name):
-		self.players.append(player_name)
+
+		self.players.append(Player(player_name))
+
 		self.in_penalty_box[self.how_many_players] = False
 		print(f"{player_name} was added")
 		print(f"They are player number {len(self.players)}")
@@ -30,10 +34,10 @@ class Game:
 		return len(self.players)
 
 	def player_place(self,roll):
-		self.places[self.current_player] = self.places[self.current_player] + roll
-		if self.places[self.current_player] > 11:
-			self.places[self.current_player] = self.places[self.current_player] - 12
-		return self.places[self.current_player]
+		self.players[self.current_player].place += roll
+		if self.players[self.current_player].place > 11:
+			self.players[self.current_player].place -= 12
+		return self.players[self.current_player].place
 
 	def roll(self, roll):
 		print(f'{self.players[self.current_player]} is the current player')
@@ -48,8 +52,8 @@ class Game:
 				self.is_getting_out_of_penalty_box = True
 				print(f'{self.players[self.current_player]} is getting out of the penalty box')
 
-		self.places[self.current_player] = self.player_place(roll)
-		print(f"{self.players[self.current_player]}'s new location is {self.places[self.current_player]}")
+		self.player_place(roll)
+		print(f"{self.players[self.current_player]}'s new location is {self.players[self.current_player].place}")
 		print(f'The category is {self._current_category}')
 		self._ask_question()
 
@@ -58,7 +62,7 @@ class Game:
 
 	@property
 	def _current_category(self):
-		return categories[self.places[self.current_player]%len(categories)]
+		return categories[self.players[self.current_player].place%len(categories)]
 
 	def was_correctly_answered(self):
 		if self.in_penalty_box[self.current_player] and not self.is_getting_out_of_penalty_box:
