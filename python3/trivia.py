@@ -66,8 +66,7 @@ class Game:
         else:
             self.places[self.current_player] = self.places[self.current_player] + roll
             if self.places[self.current_player] > 11:
-                self.places[self.current_player] = self.places[self.current_player] - 12
-
+                self.places[self.current_player] = self.places[self.current_player] - 12 
             print(self.players[self.current_player] + \
                         '\'s new location is ' + \
                         str(self.places[self.current_player]))
@@ -143,7 +142,9 @@ class Game:
         return not (self.purses[self.current_player] == 6)
 
 
-from random import randrange
+from random import randrange, seed
+import sys
+seed(int(sys.argv[1]))
 
 if __name__ == '__main__':
     not_a_winner = False
