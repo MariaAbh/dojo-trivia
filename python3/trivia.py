@@ -5,13 +5,13 @@ class Player:
 		self.name = name
 		self.place = 0
 		self.purse = 0
+		self.in_penalty_box = False
 	def __str__(self):
 		return self.name
 
 class Game:
 	def __init__(self):
 		self.players = []
-		self.in_penalty_box = [0] * 6
 
 		self.player = None
 		self.current_player = -1
@@ -19,20 +19,13 @@ class Game:
 		
 		self.category_questions = {k:[f'{k} Question {i}' for i in range(50)] for k in categories}
 
-	def is_playable(self):
-		return self.how_many_players >= 2
-
 	def add(self, player_name):
 
 		self.players.append(Player(player_name))
 
-		self.in_penalty_box[self.how_many_players] = False
 		print(f"{player_name} was added")
 		print(f"They are player number {len(self.players)}")
 
-	@property
-	def how_many_players(self):
-		return len(self.players)
 
 	def player_place(self,roll):
 		self.player.place += roll
@@ -45,7 +38,7 @@ class Game:
 		print(f'{self.player} is the current player')
 		print(f'They have rolled a {roll}')
 
-		if self.in_penalty_box[self.current_player]:
+		if self.player.in_penalty_box:
 			if roll % 2 == 0:
 				print(f'{self.player} is not getting out of the penalty box')
 				self.is_getting_out_of_penalty_box = False
@@ -67,7 +60,7 @@ class Game:
 		return categories[self.player.place%len(categories)]
 
 	def was_correctly_answered(self):
-		if self.in_penalty_box[self.current_player] and not self.is_getting_out_of_penalty_box:
+		if self.player.in_penalty_box and not self.is_getting_out_of_penalty_box:
 			winner = True
 		else:
 			print("Answer was correct!!!!")
@@ -82,7 +75,7 @@ class Game:
 	def wrong_answer(self):
 		print('Question was incorrectly answered')
 		print(f"{self.player} was sent to the penalty box")
-		self.in_penalty_box[self.current_player] = True
+		self.player.in_penalty_box = True
 
 	def _did_player_win(self):
 		return not (self.player.purse == 6)
