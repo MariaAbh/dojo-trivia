@@ -20,7 +20,6 @@ class Game:
 		self.players = []
 		self.player = None
 		self.current_player = -1
-		self.is_getting_out_of_penalty_box = False
 		self._is_finished = False
 
 		self.category_questions = {k:[f'{k} Question {i}' for i in range(50)] for k in categories}
@@ -36,13 +35,12 @@ class Game:
 		print(f'They have rolled a {roll}')
 
 		if self.player.in_penalty_box:
-			if roll % 2 == 0:
-				print(f'{self.player} is not getting out of the penalty box')
-				self.is_getting_out_of_penalty_box = False
-				return
-			else:
-				self.is_getting_out_of_penalty_box = True
+			if roll % 2 != 0:
+				self.player.in_penalty_box = False
 				print(f'{self.player} is getting out of the penalty box')
+			else:
+				print(f'{self.player} is not getting out of the penalty box')
+				return
 
 		self.player.roll(roll)
 		print(f"{self.player}'s new location is {self.player.place}")
@@ -50,8 +48,7 @@ class Game:
 		print(self.category_questions[self.player.category].pop(0))
 
 	def correct_answer(self):
-		if not self.player.in_penalty_box or self.is_getting_out_of_penalty_box:
-			self.player.in_penalty_box = False
+		if not self.player.in_penalty_box:
 			print("Answer was correct!!!!")
 			self.player.purse += 1
 			print(f"{self.player} now has {self.player.purse} Gold Coins.")
