@@ -93,7 +93,7 @@ class Game:
 			return True
 		else:
 
-			print("Answer was corrent!!!!")
+			print("Answer was correct!!!!")
 			self.purses[self.current_player] += 1
 			print(self.players[self.current_player] + \
 				' now has ' + \
