@@ -20,8 +20,6 @@ class Game:
 
 	def add(self, player_name):
 		self.players.append(player_name)
-		self.places[self.how_many_players] = 0
-		self.purses[self.how_many_players] = 0
 		self.in_penalty_box[self.how_many_players] = False
 
 		print(player_name + " was added")
