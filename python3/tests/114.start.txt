@@ -105,7 +105,9 @@ Question was incorrectly answered
 Pat was sent to the penalty box
 Sue is the current player
 They have rolled a 2
-Sue is not getting out of the penalty box
+Sue's new location is 2
+The category is Sports
+Sports Question 2
 Question was incorrectly answered
 Sue was sent to the penalty box
 Chet is the current player

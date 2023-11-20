@@ -115,7 +115,11 @@ They have rolled a 2
 Chet is not getting out of the penalty box
 Pat is the current player
 They have rolled a 2
-Pat is not getting out of the penalty box
+Pat's new location is 7
+The category is Rock
+Rock Question 4
+Answer was correct!!!!
+Pat now has 5 Gold Coins.
 Sue is the current player
 They have rolled a 4
 Sue's new location is 10

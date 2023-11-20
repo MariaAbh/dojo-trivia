@@ -51,6 +51,7 @@ class Game:
 
 	def correct_answer(self):
 		if not self.player.in_penalty_box or self.is_getting_out_of_penalty_box:
+			self.player.in_penalty_box = False
 			print("Answer was correct!!!!")
 			self.player.purse += 1
 			print(f"{self.player} now has {self.player.purse} Gold Coins.")

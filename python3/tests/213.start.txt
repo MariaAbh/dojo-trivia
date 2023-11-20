@@ -105,7 +105,6 @@ Question was incorrectly answered
 Pat was sent to the penalty box
 Sue is the current player
 They have rolled a 5
-Sue is getting out of the penalty box
 Sue's new location is 2
 The category is Sports
 Sports Question 6
