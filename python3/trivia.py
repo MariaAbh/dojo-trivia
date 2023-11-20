@@ -13,7 +13,8 @@ class Game:
 		self.purses = [0] * 6
 		self.in_penalty_box = [0] * 6
 
-		self.current_player = 0
+		self.player = None
+		self.current_player = -1
 		self.is_getting_out_of_penalty_box = False
 		
 		self.category_questions = {k:[f'{k} Question {i}' for i in range(50)] for k in categories}
@@ -34,26 +35,27 @@ class Game:
 		return len(self.players)
 
 	def player_place(self,roll):
-		self.players[self.current_player].place += roll
-		if self.players[self.current_player].place > 11:
-			self.players[self.current_player].place -= 12
-		return self.players[self.current_player].place
+		self.player.place += roll
+		if self.player.place > 11:
+			self.player.place -= 12
+		return self.player.place
 
 	def roll(self, roll):
-		print(f'{self.players[self.current_player]} is the current player')
+		self.next_player()
+		print(f'{self.player} is the current player')
 		print(f'They have rolled a {roll}')
 
 		if self.in_penalty_box[self.current_player]:
 			if roll % 2 == 0:
-				print(f'{self.players[self.current_player]} is not getting out of the penalty box')
+				print(f'{self.player} is not getting out of the penalty box')
 				self.is_getting_out_of_penalty_box = False
 				return
 			else:
 				self.is_getting_out_of_penalty_box = True
-				print(f'{self.players[self.current_player]} is getting out of the penalty box')
+				print(f'{self.player} is getting out of the penalty box')
 
 		self.player_place(roll)
-		print(f"{self.players[self.current_player]}'s new location is {self.players[self.current_player].place}")
+		print(f"{self.player}'s new location is {self.player.place}")
 		print(f'The category is {self._current_category}')
 		self._ask_question()
 
@@ -62,7 +64,7 @@ class Game:
 
 	@property
 	def _current_category(self):
-		return categories[self.players[self.current_player].place%len(categories)]
+		return categories[self.player.place%len(categories)]
 
 	def was_correctly_answered(self):
 		if self.in_penalty_box[self.current_player] and not self.is_getting_out_of_penalty_box:
@@ -72,17 +74,15 @@ class Game:
 
 			self.purses[self.current_player] += 1
 			
-			print(f"{self.players[self.current_player]} now has {self.purses[self.current_player]} Gold Coins.")
+			print(f"{self.player} now has {self.purses[self.current_player]} Gold Coins.")
 			winner = self._did_player_win()
 			
-		self.current_player = self.next_player()
 		return winner
 
 	def wrong_answer(self):
 		print('Question was incorrectly answered')
-		print(f"{self.players[self.current_player]} was sent to the penalty box")
+		print(f"{self.player} was sent to the penalty box")
 		self.in_penalty_box[self.current_player] = True
-		self.current_player = self.next_player()
 
 	def _did_player_win(self):
 		return not (self.purses[self.current_player] == 6)
@@ -91,6 +91,7 @@ class Game:
 		self.current_player += 1
 		if self.current_player == len(self.players): 
 			self.current_player = 0
+		self.player = self.players[self.current_player]
 		return self.current_player
 
 
