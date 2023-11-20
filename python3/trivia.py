@@ -8,6 +8,10 @@ class Player:
 		self.in_penalty_box = False
 	def __str__(self):
 		return self.name
+	def roll(self,roll):
+		self.place += roll
+		self.place %= 12
+		return self.place
 
 class Game:
 	def __init__(self):
@@ -26,13 +30,6 @@ class Game:
 		print(f"{player_name} was added")
 		print(f"They are player number {len(self.players)}")
 
-
-	def player_place(self,roll):
-		self.player.place += roll
-		if self.player.place > 11:
-			self.player.place -= 12
-		return self.player.place
-
 	def roll(self, roll):
 		self.next_player()
 		print(f'{self.player} is the current player')
@@ -47,7 +44,7 @@ class Game:
 				self.is_getting_out_of_penalty_box = True
 				print(f'{self.player} is getting out of the penalty box')
 
-		self.player_place(roll)
+		self.player.roll(roll)
 		print(f"{self.player}'s new location is {self.player.place}")
 		print(f'The category is {self._current_category}')
 		self._ask_question()
