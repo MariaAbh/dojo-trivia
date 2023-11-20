@@ -22,8 +22,8 @@ class Game:
 	def add(self, player_name):
 		self.players.append(player_name)
 		self.in_penalty_box[self.how_many_players] = False
-		print(player_name + " was added")
-		print("They are player number %s" % len(self.players))
+		print(f"{player_name} was added")
+		print(f"They are player number {len(self.players)}")
 
 	@property
 	def how_many_players(self):
@@ -49,7 +49,7 @@ class Game:
 				print(f'{self.players[self.current_player]} is getting out of the penalty box')
 
 		self.places[self.current_player] = self.player_place(roll)
-		print(self.players[self.current_player] + '\'s new location is ' + str(self.places[self.current_player]))
+		print(f"{self.players[self.current_player]}'s new location is {self.places[self.current_player]}")
 		print(f'The category is {self._current_category}')
 		self._ask_question()
 
@@ -68,7 +68,7 @@ class Game:
 
 			self.purses[self.current_player] += 1
 			
-			print(self.players[self.current_player] + ' now has ' + str(self.purses[self.current_player]) + ' Gold Coins.')
+			print(f"{self.players[self.current_player]} now has {self.purses[self.current_player]} Gold Coins.")
 			winner = self._did_player_win()
 			
 		self.current_player = self.next_player()
@@ -76,7 +76,7 @@ class Game:
 
 	def wrong_answer(self):
 		print('Question was incorrectly answered')
-		print(self.players[self.current_player] + " was sent to the penalty box")
+		print(f"{self.players[self.current_player]} was sent to the penalty box")
 		self.in_penalty_box[self.current_player] = True
 		self.current_player = self.next_player()
 
