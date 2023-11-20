@@ -6,12 +6,17 @@ do_test () {
 	now="tests/${seed}.now.txt"
 
 	timeout 5 python3 ./trivia.py "${seed}" > "${now}"
-	if [ "$?" = "124" ]
-	then
-		echo "${seed}	TIMEOUT"
-	elif diff "${orig}" "${now}" > /dev/null 2>/dev/null
+	exit_code="$?"
+	if diff "${orig}" "${now}" > /dev/null 2>/dev/null
 	then
 		echo "${seed}	OK"
+		if [ "${exit_code}" = "124" ]
+		then
+			echo "${seed}	ok but wtf"
+		fi
+	elif [ "${exit_code}" = "124" ]
+	then
+		echo "${seed}	TIMEOUT"
 	else
 		echo "${seed}	FAILED"
 	fi
@@ -24,6 +29,8 @@ all_test () {
 	done
 	wait
 }
+
+rm -f tests/*.now.txt
 if [ $# != 0 ]
 then
 	while [ $# != 0 ]
