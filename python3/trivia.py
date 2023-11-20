@@ -49,7 +49,7 @@ class Game:
 		print(f'The category is {self.player.category}')
 		print(self.category_questions[self.player.category].pop(0))
 
-	def was_correctly_answered(self):
+	def correct_answer(self):
 		if not self.player.in_penalty_box or self.is_getting_out_of_penalty_box:
 			print("Answer was correct!!!!")
 			self.player.purse += 1
@@ -88,4 +88,4 @@ if __name__ == '__main__':
 		if randrange(9) == 7:
 			game.wrong_answer()
 		else:
-			game.was_correctly_answered()
+			game.correct_answer()
