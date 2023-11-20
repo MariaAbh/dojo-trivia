@@ -16,7 +16,6 @@ class Player:
 class Game:
 	def __init__(self):
 		self.players = []
-
 		self.player = None
 		self.current_player = -1
 		self.is_getting_out_of_penalty_box = False
@@ -24,9 +23,7 @@ class Game:
 		self.category_questions = {k:[f'{k} Question {i}' for i in range(50)] for k in categories}
 
 	def add(self, player_name):
-
 		self.players.append(Player(player_name))
-
 		print(f"{player_name} was added")
 		print(f"They are player number {len(self.players)}")
 
@@ -84,27 +81,22 @@ class Game:
 		self.player = self.players[self.current_player]
 		return self.current_player
 
-
 from random import randrange, seed
 import sys
 seed(int(sys.argv[1]))
 
 if __name__ == '__main__':
 	not_a_winner = False
-
 	game = Game()
-
 	game.add('Chet')
 	game.add('Pat')
 	game.add('Sue')
 
 	while True:
 		game.roll(randrange(5) + 1)
-
 		if randrange(9) == 7:
 			game.wrong_answer()
 			not_a_winner = True
 		else:
 			not_a_winner = game.was_correctly_answered()
-
 		if not not_a_winner: break
